@@ -45,6 +45,18 @@ function retrieveTransactionsFromStorage() {
   return parsedTransactions || [];
 }
 
+function deleteTransactionById(transactionID) {
+  console.log(transactionID);
+  const transactions = retrieveTransactionsFromStorage();
+
+  const filteredTransactions = transactions.filter(
+    (transaction) => transaction.id !== transactionID,
+  );
+
+  const parsedTransactions = JSON.stringify(filteredTransactions);
+  localStorage.setItem(TRANSACTION_STORAGE_KEY, parsedTransactions);
+}
+
 function listTransactions() {
   const transactions = retrieveTransactionsFromStorage();
 
@@ -59,7 +71,8 @@ function listTransactions() {
     const typeIndicator = transaction.type.includes("expense") ? "-" : "+";
 
     return `
-            <li id="item">
+            <li>
+                <strong>${transaction.id}</strong>
                 <strong>${transaction.title}</strong>
                 <div>
                     <span>
@@ -68,7 +81,8 @@ function listTransactions() {
                     <span>
                         Valor: ${typeIndicator}${formatterCurrency(transaction.amount)}
                     </span>
-                    <button>delete</button>
+                    <button onclick="deleteTransactionById(${transaction.id})">delete
+                    </button>
                 </div>
             </li>
         `;
@@ -98,6 +112,7 @@ function addTransaction() {
   const transactions = retrieveTransactionsFromStorage();
 
   transactions.push({
+    id: Date.now(),
     type,
     amount,
     title,
