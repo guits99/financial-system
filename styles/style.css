@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: poppins, sans-serif;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+   width: 100%;
+   justify-content: center;
+}
+
+input {
+    width: 240px;
+    height: 30px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+select {
+    width: 100px;
+    margin-bottom: 20px;
+    
+}
+
+button {
+
+    width: 120px;
+    height: 30px;
+    background-color: slategrey;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+
+#transactions {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px ;
+    height: 100%;
+}

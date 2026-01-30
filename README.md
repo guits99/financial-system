@@ -1,5 +1,3 @@
-// adicionar features
-1 - visualização das quantias de receitas e despesas.
-2 - aplicar css, melhorar ui
-3 - melhorar visualização da quantia exibida nos itens da lista.
-4 - excluir transação
+// 1- resolver bug de ao adicionar uma nova transação
+aparece um alert dizendo que o titulo não foi informado mesmo ja sendo informado
+// 2- adicionar funcionalidade de excluir transação por id

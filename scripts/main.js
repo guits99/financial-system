@@ -27,6 +27,11 @@ function formatterCurrency(amount) {
   return parsedAmount.format(amount);
 }
 
+function clearAllTransactionsInStorage() {
+  localStorage.clear();
+  listTransactions();
+}
+
 function saveTransactionsInStorage(transactions) {
   const parsedTransactions = JSON.stringify(transactions);
 
@@ -35,6 +40,7 @@ function saveTransactionsInStorage(transactions) {
 
 function retrieveTransactionsFromStorage() {
   const transactionsJSON = localStorage.getItem(TRANSACTION_STORAGE_KEY);
+  console.log("JSON:", transactionsJSON);
   const parsedTransactions = JSON.parse(transactionsJSON);
   return parsedTransactions || [];
 }
@@ -50,16 +56,19 @@ function listTransactions() {
   transactionsList.innerHTML = transactions.map((transaction) => {
     const typeLabel = transaction.type.includes("expense") ? "Despesa" : "Receita";
 
+    const typeIndicator = transaction.type.includes("expense") ? "-" : "+";
+
     return `
-            <li>
+            <li id="item">
                 <strong>${transaction.title}</strong>
                 <div>
                     <span>
                         Tipo: ${typeLabel}
                     </span>
                     <span>
-                        Valor: ${formatterCurrency(transaction.amount)}
+                        Valor: ${typeIndicator}${formatterCurrency(transaction.amount)}
                     </span>
+                    <button>delete</button>
                 </div>
             </li>
         `;
@@ -78,6 +87,7 @@ function addTransaction() {
 
   if (!type) {
     alert("Por favor, informe o tipo.");
+    return;
   }
 
   if (isNaN(amount) || amount <= 0) {
