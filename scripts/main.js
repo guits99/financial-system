@@ -11,9 +11,12 @@ function calculateTotalRevenue(revenues) {
   }
 
   const validRevenues = revenues.filter(
-    (revenue) => typeof revenue === "number" && !isNaN(revenue),
+    (revenue) => typeof revenue === "number" && !isNaN(revenue)
   );
-  const totalRevenues = validRevenues.reduce((total, revenue) => total + revenue, 0);
+  const totalRevenues = validRevenues.reduce(
+    (total, revenue) => total + revenue,
+    0
+  );
 
   return totalRevenues;
 }
@@ -40,21 +43,41 @@ function saveTransactionsInStorage(transactions) {
 
 function retrieveTransactionsFromStorage() {
   const transactionsJSON = localStorage.getItem(TRANSACTION_STORAGE_KEY);
-  console.log("JSON:", transactionsJSON);
   const parsedTransactions = JSON.parse(transactionsJSON);
   return parsedTransactions || [];
 }
 
+function editTransactionById(transactionID, newEditTransaction) {
+  const transactions = retrieveTransactionsFromStorage();
+
+  const findedTransaction = transactions.find((transaction) => {
+    return transaction.id === transactionID;
+  });
+
+  console.log(findedTransaction);
+
+  if (!findedTransaction) {
+    alert("Não foi possivel encontrar a transação.");
+    return;
+  }
+
+  findedTransaction.title = newEditTransaction;
+
+  const parsedTransactions = JSON.stringify(transactions);
+  localStorage.setItem(TRANSACTION_STORAGE_KEY, parsedTransactions);
+}
+
 function deleteTransactionById(transactionID) {
-  console.log(transactionID);
   const transactions = retrieveTransactionsFromStorage();
 
   const filteredTransactions = transactions.filter(
-    (transaction) => transaction.id !== transactionID,
+    (transaction) => transaction.id !== transactionID
   );
 
   const parsedTransactions = JSON.stringify(filteredTransactions);
   localStorage.setItem(TRANSACTION_STORAGE_KEY, parsedTransactions);
+
+  listTransactions();
 }
 
 function listTransactions() {
@@ -66,7 +89,9 @@ function listTransactions() {
   }
 
   transactionsList.innerHTML = transactions.map((transaction) => {
-    const typeLabel = transaction.type.includes("expense") ? "Despesa" : "Receita";
+    const typeLabel = transaction.type.includes("expense")
+      ? "Despesa"
+      : "Receita";
 
     const typeIndicator = transaction.type.includes("expense") ? "-" : "+";
 
@@ -82,6 +107,8 @@ function listTransactions() {
                         Valor: ${typeIndicator}${formatterCurrency(transaction.amount)}
                     </span>
                     <button onclick="deleteTransactionById(${transaction.id})">delete
+                    </button>
+                    <button onclick="editTransactionById(${transaction.id})">edit
                     </button>
                 </div>
             </li>
