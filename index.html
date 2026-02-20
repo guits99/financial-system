@@ -16,13 +16,32 @@
   <body>
     <div class="container">
       <label for=""><h1>Financial System</h1></label>
-      <input type="text" id="title" placeholder="Ex. Salario, Freelancer, etc." />
+      <input
+        type="text"
+        id="title"
+        placeholder="Ex. Salario, Freelancer, etc."
+      />
       <input type="number" id="amount" placeholder="0,00" min="0" />
+      <input type="date" id="date" />
       <select id="type">
         <option value="revenue">Receita</option>
         <option value="expense">Despesa</option>
       </select>
-      <button onclick="addTransaction()">Adicionar</button>
+      <button id="add-transaction-button" onclick="addTransaction()">
+        Adicionar
+      </button>
+      <button
+        id="save-edited-transaction-button"
+        onclick="saveTransactionEdited()"
+      >
+        Salvar
+      </button>
+      <button
+        id="cancel-edit-transaction-button"
+        onclick="cancelEditTransaction()"
+      >
+        Cancelar edição
+      </button>
       <button onclick="clearAllTransactionsInStorage()">Limpar</button>
       <ul id="transactions"></ul>
     </div>
